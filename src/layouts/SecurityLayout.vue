@@ -29,7 +29,7 @@ export default defineComponent({
         const currentUser = computed<CurrentUser>(()=> store.state.user.currentUser);
 
         // 判断是否登录
-        const isLogin = computed<boolean>(()=> currentUser.value ? currentUser.value.id > 0 : false);
+        const isLogin = computed<boolean>(()=> currentUser.value ? currentUser.value.userId > 0 : false);
 
         // 读取当前用户信息func
         const isReady = ref<boolean>(false); // 是否读取过用户信息
