@@ -7,8 +7,8 @@ import 'nprogress/nprogress.css'; // progress bar style
 NProgress.configure({ showSpinner: false, easing: 'ease', speed: 1000 }); // NProgress Configuration
 
 import { createRouter, createWebHashHistory } from 'vue-router';
-import { RoutesDataItem } from "@/utils/routes";
-import settings from "@/config/settings";
+import { RoutesDataItem } from '@/utils/routes';
+import settings from '@/config/settings';
 
 import SecurityLayout from '@/layouts/SecurityLayout.vue';
 
@@ -17,7 +17,7 @@ import IndexLayout from '@/layouts/IndexLayout/index.vue';
 
 import UserLayoutRoutes from '@/layouts/UserLayout/routes';
 import UserLayout from '@/layouts/UserLayout/index.vue';
-
+import BlankLayout from '@/layouts/BlankLayout.vue';
 
 const routes: RoutesDataItem[] = [
   {
@@ -30,39 +30,37 @@ const routes: RoutesDataItem[] = [
         path: '/',
         redirect: settings.homeRouteItem.path,
         component: IndexLayout,
-        children: IndexLayoutRoutes
+        children: IndexLayoutRoutes,
       },
       {
         title: 'empty',
         path: '/refresh',
         component: () => import('@/views/refresh/index.vue'),
       },
-    ]
-  },  
+    ],
+  },
   {
     title: 'empty',
     path: '/user',
     redirect: '/user/login',
     component: UserLayout,
-    children: UserLayoutRoutes
+    children: UserLayoutRoutes,
   },
   {
     title: 'app.global.menu.notfound',
     path: '/:pathMatch(.*)*',
     component: () => import('@/views/404/index.vue'),
-  }
-]
-
-
+  },
+];
 
 const router = createRouter({
-    scrollBehavior(/* to, from, savedPosition */) {
-      return { top: 0 }
-    },
-    history: createWebHashHistory(import.meta.env.BASE_URL),
-    routes: routes,
+  scrollBehavior(/* to, from, savedPosition */) {
+    return { top: 0 };
+  },
+  history: createWebHashHistory(import.meta.env.BASE_URL),
+  routes: routes,
 });
- 
+
 router.beforeEach((/* to, from */) => {
   // start progress bar
   NProgress.start();

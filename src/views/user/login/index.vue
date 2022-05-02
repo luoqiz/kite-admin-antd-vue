@@ -44,6 +44,8 @@ import { UserOutlined, UnlockOutlined } from '@ant-design/icons-vue';
 import useI18nAntdFormVaildateInfos from '@/composables/useI18nAntdFormVaildateInfos';
 import { LoginParamsType } from './data.d';
 import { StateType as UserLoginStateType } from './store';
+import IndexLayoutRoutes from "@/layouts/IndexLayout/routes";
+import BlankLayout from "@/layouts/BlankLayout.vue";
 
 interface UserLoginSetupData {
     t: (key: string | number) => string;    
@@ -97,7 +99,54 @@ export default defineComponent({
             submitLoading.value = true;
             try {
                 const fieldsValue = await validate<LoginParamsType>();
-                const res: boolean = await store.dispatch('userlogin/login',fieldsValue);                
+                const res: boolean = await store.dispatch('userlogin/login',fieldsValue);
+              IndexLayoutRoutes.push({
+                icon: 'components',
+                title: '罗强制234',
+                path: '/component',
+                redirect: '/component/icon/svg',
+                component: BlankLayout,
+                children: [
+                  {
+                    icon: 'icon',
+                    title: 'index-layout.menu.component.icon',
+                    path: 'icon',
+                    redirect: '/component/icon/svg',
+                    component: BlankLayout,
+                    children: [
+                      {
+                        title: 'index-layout.menu.component.icon.svg',
+                        path: 'svg',
+                        component: () => import('@/views/component/icon/svg/index.vue'),
+                      },
+                      {
+                        title: 'index-layout.menu.component.icon.font',
+                        path: 'font',
+                        component: () => import('@/views/component/icon/font/index.vue'),
+                      },
+                    ],
+                  },
+                  {
+                    icon: 'editor',
+                    title: 'index-layout.menu.component.editor',
+                    path: 'editor',
+                    redirect: '/component/editor/tuieditor',
+                    component: BlankLayout,
+                    children: [
+                      {
+                        title: 'index-layout.menu.component.editor.tui-editor',
+                        path: 'tuieditor',
+                        component: () => import('@/views/component/editor/tui-editor/index.vue'),
+                      },
+                      {
+                        title: 'index-layout.menu.component.editor.ckeditor',
+                        path: 'ckeditor',
+                        component: () => import('@/views/component/editor/ckeditor/index.vue'),
+                      },
+                    ],
+                  },
+                ],
+              });
                 if (res === true) {
                     message.success(t('page.user.login.form.login-success'));
                     const { redirect, ...query } = currentRoute.value.query;

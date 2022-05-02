@@ -29,7 +29,7 @@
                 <permission :roles="routeItem.roles">
                   <router-view></router-view>
                 </permission>
-                <right-footer></right-footer>
+                <right-footer class="indexlayout-main-footer"></right-footer>
             </div>
         </div>
 

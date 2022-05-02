@@ -35,4 +35,19 @@ export default {
   'index-layout.menu.roles.all': '用户都有权限',
   'index-layout.menu.roles.user': 'Users有权限',
   'index-layout.menu.roles.test': 'Tests有权限',
+
+  'index-layout.menu.system': '系统管理',
+  'index-layout.menu.system.user': '用户管理',
+  'index-layout.menu.system.role': '角色管理',
+  'index-layout.menu.system.menu': '菜单管理',
+  'index-layout.menu.system.dept': '部门管理',
+  'index-layout.menu.system.dict': '字典管理',
+  'index-layout.menu.system.job': '岗位管理',
+  'index-layout.menu.system.sms': '短信管理',
+  'index-layout.menu.component.sms.config': '短信配置',
+  'index-layout.menu.component.sms.record': '短信记录',
+  'index-layout.menu.system.merchant': '商户配置',
+
+  'index-layout.menu.order': '订单管理',
+  'index-layout.menu.software.version': '软件版本',
 };
