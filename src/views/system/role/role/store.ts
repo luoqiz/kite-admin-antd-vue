@@ -4,6 +4,7 @@ import { ResponseData } from '@/utils/request';
 import { SysRoleDataType, TableDataType, TableListQueryParams } from './data';
 import {
   queryList,
+  queryAll,
   removeData,
   createData,
   detailData,
@@ -24,6 +25,7 @@ export interface ModuleType extends StoreModuleType<StateType> {
   };
   actions: {
     queryTableData: Action<StateType, StateType>;
+    queryAllData: Action<StateType, StateType>;
     deleteTableData: Action<StateType, StateType>;
     batchDeleteTableData: Action<StateType, StateType>;
     createTableData: Action<StateType, StateType>;
@@ -61,6 +63,15 @@ const StoreModel: ModuleType = {
     },
   },
   actions: {
+    async queryAllData({ commit }, payload: TableListQueryParams) {
+      try {
+        const response: ResponseData = await queryAll(payload);
+        const { data } = response;
+        return data;
+      } catch (error) {
+        return [];
+      }
+    },
     async queryTableData({ commit }, payload: TableListQueryParams) {
       try {
         const response: ResponseData = await queryList(payload);

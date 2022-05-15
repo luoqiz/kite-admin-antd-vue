@@ -9,6 +9,14 @@ export async function queryList(params?: TableListQueryParams): Promise<any> {
   });
 }
 
+export async function queryAll(params?: TableListQueryParams): Promise<any> {
+  return request({
+    url: '/v1/sys-role/search/all',
+    method: 'get',
+    params,
+  });
+}
+
 export async function createData(params: Omit<SysRoleDataType, 'roleId'>): Promise<any> {
   return request({
     url: '/v1/sys-role',

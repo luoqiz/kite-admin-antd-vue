@@ -4,40 +4,42 @@
  */
 import NProgress from 'nprogress'; // progress bar
 import 'nprogress/nprogress.css'; // progress bar style
-NProgress.configure({ showSpinner: false, easing: 'ease', speed: 1000 }); // NProgress Configuration
-
 import { createRouter, createWebHashHistory } from 'vue-router';
 import { RoutesDataItem } from '@/utils/routes';
-import settings from '@/config/settings';
-
-import SecurityLayout from '@/layouts/SecurityLayout.vue';
-
-import IndexLayoutRoutes from '@/layouts/IndexLayout/routes';
-import IndexLayout from '@/layouts/IndexLayout/index.vue';
 
 import UserLayoutRoutes from '@/layouts/UserLayout/routes';
 import UserLayout from '@/layouts/UserLayout/index.vue';
 import BlankLayout from '@/layouts/BlankLayout.vue';
+import { updateRouter } from '@/utils/sessionMenus';
+
+NProgress.configure({ showSpinner: false, easing: 'ease', speed: 1000 }); // NProgress Configuration
 
 const routes: RoutesDataItem[] = [
+  // {
+  //   title: 'empty',
+  //   path: '/',
+  //   component: SecurityLayout,
+  //   children: [
+  //     {
+  //       title: 'empty',
+  //       path: '/',
+  //       redirect: settings.homeRouteItem.path,
+  //       component: IndexLayout,
+  //       children: store.state.user.userMenus,
+  //     },
+  //     {
+  //       title: 'empty',
+  //       path: '/refresh',
+  //       component: () => import('@/views/refresh/index.vue'),
+  //     },
+  //   ],
+  // },
   {
+    name: 'index',
     title: 'empty',
     path: '/',
-    component: SecurityLayout,
-    children: [
-      {
-        title: 'empty',
-        path: '/',
-        redirect: settings.homeRouteItem.path,
-        component: IndexLayout,
-        children: IndexLayoutRoutes,
-      },
-      {
-        title: 'empty',
-        path: '/refresh',
-        component: () => import('@/views/refresh/index.vue'),
-      },
-    ],
+    component: BlankLayout,
+    redirect: '/user',
   },
   {
     title: 'empty',
@@ -45,11 +47,6 @@ const routes: RoutesDataItem[] = [
     redirect: '/user/login',
     component: UserLayout,
     children: UserLayoutRoutes,
-  },
-  {
-    title: 'app.global.menu.notfound',
-    path: '/:pathMatch(.*)*',
-    component: () => import('@/views/404/index.vue'),
   },
 ];
 
@@ -70,5 +67,7 @@ router.afterEach(() => {
   // finish progress bar
   NProgress.done();
 });
+
+updateRouter(router);
 
 export default router;

@@ -38,12 +38,12 @@ export default defineComponent({
             loading.value = true;
             await store.dispatch('user/fetchCurrent');
             if(!isLogin.value && router.currentRoute.value.path !== '/user/login') {
-                router.replace({
-                    path: '/user/login',
-                    query: {
-                        redirect: router.currentRoute.value.path,
-                        ...router.currentRoute.value.query
-                    }
+                await router.replace({
+                  path: '/user/login',
+                  query: {
+                    redirect: router.currentRoute.value.path,
+                    ...router.currentRoute.value.query
+                  }
                 })
             }            
             loading.value = false;

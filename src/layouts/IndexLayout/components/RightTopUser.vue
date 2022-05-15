@@ -1,7 +1,7 @@
 <template>
     <a-dropdown>
         <a class="indexlayout-top-usermenu ant-dropdown-link" @click="e => e.preventDefault()">
-            {{currentUser.name}} <DownOutlined />
+            {{currentUser.nickName}} <DownOutlined />
         </a>
         <template #overlay>
             <a-menu @click="onMenuClick">
@@ -48,12 +48,12 @@ export default defineComponent({
             if (key === 'logout') {
                 const res: boolean = await store.dispatch('user/logout');
                 if(res === true) {
-                    router.replace({
-                        path: '/user/login',
-                        query: {
-                            redirect: router.currentRoute.value.path,
-                            ...router.currentRoute.value.query
-                        }
+                    await router.replace({
+                      path: '/user/login',
+                      query: {
+                        redirect: router.currentRoute.value.path,
+                        ...router.currentRoute.value.query
+                      }
                     })
                 }
             }

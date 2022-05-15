@@ -12,77 +12,91 @@
       <a-button key="submit" type="primary" :loading="onSubmitLoading" @click="onFinish">提交</a-button>
     </template>
 
-    <a-form :labelCol="{ span: 4 }" :wrapper-col="{span:20}">
+    <a-form labelAlign="right" layout="vertical" :label-col="{ style: { width: '80px' } }"
+            :wrapper-col="{ span: 24 }">
+      <a-row :gutter="24">
+        <a-col span="12">
+          <a-form-item label="用户名" v-bind="validateInfos.username" required>
+            <a-input v-model:value="modelRef.username" placeholder="请输入用户名"/>
+          </a-form-item>
+        </a-col>
+        <a-col span="12">
+          <a-form-item label="昵称" v-bind="validateInfos.nickName" required>
+            <a-input v-model:value="modelRef.nickName" placeholder="请输入昵称"/>
+          </a-form-item>
+        </a-col>
+      </a-row>
 
+      <a-row :gutter="24">
 
-      <a-form-item label="ID" v-bind="validateInfos.userId">
-        <a-input-number v-model:value="modelRef.userId"/>
-      </a-form-item>
+        <a-col span="12">
+          <a-form-item label="手机号" v-bind="validateInfos.phone" required>
+            <a-input v-model:value="modelRef.phone" placeholder="请输入手机号码"/>
+          </a-form-item>
+        </a-col>
+        <a-col span="12">
+          <a-form-item label="邮箱" v-bind="validateInfos.email" required>
+            <a-input v-model:value="modelRef.email" placeholder="请输入邮箱"/>
+          </a-form-item>
+        </a-col>
+      </a-row>
 
-      <a-form-item label="部门名称" v-bind="validateInfos.deptId">
-        <a-input-number v-model:value="modelRef.deptId"/>
-      </a-form-item>
+      <a-row :gutter="24">
+        <a-col span="12">
+          <a-form-item label="部门名称" v-bind="validateInfos.deptId">
+            <KiteDeptTree v-model:value="modelRef.deptId"></KiteDeptTree>
+          </a-form-item>
+        </a-col>
+        <a-col span="12">
+          <a-form-item label="岗位" v-bind="validateInfos.email">
+            <!--            <a-input v-model:value="modelRef.email" placeholder="请输入邮箱"/>-->
+          </a-form-item>
+        </a-col>
+      </a-row>
 
-      <a-form-item label="用户名" v-bind="validateInfos.username">
-        <a-input v-model:value="modelRef.username" placeholder="请输入用户名"/>
-      </a-form-item>
+      <a-row :gutter="24">
+        <a-col span="12">
+          <a-form-item label="状态" v-bind="validateInfos.enabled">
+            <a-radio-group v-model:value="modelRef.enabled">
+              <a-radio :value="true">启用</a-radio>
+              <a-radio :value="false">禁用</a-radio>
+            </a-radio-group>
+          </a-form-item>
+        </a-col>
+        <a-col span="12">
+          <a-form-item label="性别" v-bind="validateInfos.gender">
+            <a-radio-group v-model:value="modelRef.gender">
+              <a-radio value="1">男</a-radio>
+              <a-radio value="2">女</a-radio>
+            </a-radio-group>
+          </a-form-item>
+        </a-col>
+      </a-row>
 
-      <a-form-item label="昵称" v-bind="validateInfos.nickName">
-        <a-input v-model:value="modelRef.nickName" placeholder="请输入昵称"/>
-      </a-form-item>
+      <a-row :gutter="24">
+        <a-col span="12">
+          <a-form-item label="到期时间" v-bind="validateInfos.expireTime">
+<!--            <a-input v-model:value="modelRef.expireTime" placeholder="请输入账号到期时间"/>-->
+            <a-date-picker show-time  v-model:value="modelRef.expireTime" placeholder="请输入账号到期时间" />
+          </a-form-item>
+        </a-col>
+        <a-col span="12">
+          <a-form-item label="账号未锁定" v-bind="validateInfos.nonLocked">
+            <a-radio-group v-model:value="modelRef.nonLocked">
+              <a-radio :value="true">是</a-radio>
+              <a-radio :value="false">否</a-radio>
+            </a-radio-group>
+          </a-form-item>
+        </a-col>
+      </a-row>
 
-      <a-form-item label="性别" v-bind="validateInfos.gender">
-        <a-input v-model:value="modelRef.gender" placeholder="请输入性别"/>
-      </a-form-item>
-
-      <a-form-item label="手机号码" v-bind="validateInfos.phone">
-        <a-input v-model:value="modelRef.phone" placeholder="请输入手机号码"/>
-      </a-form-item>
-
-      <a-form-item label="邮箱" v-bind="validateInfos.email">
-        <a-input v-model:value="modelRef.email" placeholder="请输入邮箱"/>
-      </a-form-item>
-
-      <a-form-item label="头像地址" v-bind="validateInfos.avatarName">
-        <a-input v-model:value="modelRef.avatarName" placeholder="请输入头像地址"/>
-      </a-form-item>
-
-      <a-form-item label="头像真实路径" v-bind="validateInfos.avatarPath">
-        <a-input v-model:value="modelRef.avatarPath" placeholder="请输入头像真实路径"/>
-      </a-form-item>
-
-      <a-form-item label="密码" v-bind="validateInfos.password">
-        <a-input v-model:value="modelRef.password" placeholder="请输入密码"/>
-      </a-form-item>
-
-      <a-form-item label="是否为admin账号" v-bind="validateInfos.isAdmin">
-        <a-radio-group v-model:value="modelRef.isAdmin">
-          <a-radio :style="radioStyle" :value="true">是</a-radio>
-          <a-radio :style="radioStyle" :value="false">否</a-radio>
-        </a-radio-group>
-      </a-form-item>
-
-      <a-form-item label="状态：1启用、0禁用" v-bind="validateInfos.enabled">
-        <a-radio-group v-model:value="modelRef.enabled">
-          <a-radio :style="radioStyle" :value="true">是</a-radio>
-          <a-radio :style="radioStyle" :value="false">否</a-radio>
-        </a-radio-group>
-      </a-form-item>
-
-      <a-form-item label="账号到期时间" v-bind="validateInfos.expireTime">
-        <a-input v-model:value="modelRef.expireTime" placeholder="请输入账号到期时间"/>
-      </a-form-item>
-
-      <a-form-item label="账号是否未锁定" v-bind="validateInfos.nonLocked">
-        <a-radio-group v-model:value="modelRef.nonLocked">
-          <a-radio :style="radioStyle" :value="true">是</a-radio>
-          <a-radio :style="radioStyle" :value="false">否</a-radio>
-        </a-radio-group>
-      </a-form-item>
-
-      <a-form-item label="修改密码的时间" v-bind="validateInfos.pwdResetTime">
-        <a-input v-model:value="modelRef.pwdResetTime" placeholder="请输入修改密码的时间"/>
-      </a-form-item>
+      <a-row :gutter="24">
+        <a-col span="24">
+          <a-form-item label="角色" v-bind="validateInfos.roleIds">
+            <RoleTreeSelect v-model:model-value="modelRef.roleIds"></RoleTreeSelect>
+          </a-form-item>
+        </a-col>
+      </a-row>
     </a-form>
 
 
@@ -93,8 +107,9 @@ import {defineComponent, PropType, reactive} from "vue";
 import {useI18n} from "vue-i18n";
 import {Props, validateInfos} from 'ant-design-vue/lib/form/useForm';
 import {Form, message} from 'ant-design-vue';
-// import CKEditor from "@/components/CKEditor/index.vue";
 import {SysUserDataType} from "../data.d";
+import KiteDeptTree from "@/components/KiteDeptTree/index.vue";
+import RoleTreeSelect from "@/views/system/role/components/RoleTreeSelect.vue";
 
 const useForm = Form.useForm;
 
@@ -129,7 +144,8 @@ export default defineComponent({
     }
   },
   components: {
-    // CKEditor
+    RoleTreeSelect,
+    KiteDeptTree
   },
   setup(props): UpdateFormSetupData {
 
@@ -137,68 +153,42 @@ export default defineComponent({
 
     // 表单值
     const modelRef = reactive<SysUserDataType>({
-
       userId: props.values.userId || 0,
-
       deptId: props.values.deptId || 0,
-
       username: props.values.username || '',
-
       nickName: props.values.nickName || '',
-
       gender: props.values.gender || '',
-
       phone: props.values.phone || '',
-
       email: props.values.email || '',
-
       avatarName: props.values.avatarName || '',
-
       avatarPath: props.values.avatarPath || '',
-
       password: props.values.password || '',
-
       isAdmin: props.values.isAdmin || false,
-
       enabled: props.values.enabled || false,
-
       expireTime: props.values.expireTime,
-
       nonLocked: props.values.nonLocked || false,
-
       pwdResetTime: props.values.pwdResetTime,
+      jobIds: props.values.jobIds || [],
+      roleIds: props.values.roleIds || [],
     });
     // 表单验证
     const rulesRef = reactive({
       userId: [],
-
       deptId: [],
-
       username: [],
-
       nickName: [],
-
       gender: [],
-
       phone: [],
-
       email: [],
-
       avatarName: [],
-
       avatarPath: [],
-
       password: [],
-
       isAdmin: [],
-
       enabled: [],
-
       expireTime: [],
-
       nonLocked: [],
-
       pwdResetTime: [],
+      roleIds: [],
     });
     // 获取表单内容
     const {resetFields, validate, validateInfos} = useForm(modelRef, rulesRef);

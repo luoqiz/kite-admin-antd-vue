@@ -1,4 +1,4 @@
-import { Mutation, Action } from 'vuex';
+import { Action, Mutation } from 'vuex';
 import { StoreModuleType } from '@/utils/store';
 import { ResponseData } from '@/utils/request';
 import { setToken } from '@/utils/localToken';
@@ -36,16 +36,14 @@ const StoreModel: ModuleType = {
   },
   actions: {
     async login({ commit }, payload: LoginParamsType) {
-      let status = undefined;
+      let status = '';
       try {
         const response: ResponseData = await accountLogin(payload);
         const { data } = response;
-        setToken(data.tokenInfo.token || '');
+        await setToken(data.tokenInfo.token || '');
         status = 'ok';
       } catch (error) {
-        if (error.message && error.message === 'CustomError') {
-          status = 'error';
-        }
+        status = 'error';
       }
 
       commit('changeLoginStatus', status);

@@ -51,12 +51,12 @@ import {
 } from '@/utils/routes';
 import { mergeUnique as ArrayMergeUnique } from '@/utils/array';
 import useTitle from '@/composables/useTitle';
-import IndexLayoutRoutes from './routes';
 import Permission from '@/components/Permission/index.vue';
 import Left from '@/layouts/IndexLayout/components/Left.vue';
 import RightTop from '@/layouts/IndexLayout/components/RightTop.vue';
 import RightFooter from '@/layouts/IndexLayout/components/RightFooter.vue';
 import Settings from '@/layouts/IndexLayout/components/Settings.vue';
+import {getMenus} from "@/utils/sessionMenus";
 
 interface IndexLayoutSetupData {
   collapsed: ComputedRef<boolean>;
@@ -86,12 +86,12 @@ export default defineComponent({
       const store = useStore<{
         global: GlobalStateType;
         user: UserStateType;
-      }>(); 
+      }>();
       const route = useRoute();
-
+     const menuDatas = getMenus();
       // 所有菜单路由
-      const menuData: RoutesDataItem[] = vueRoutes(IndexLayoutRoutes);   
-      
+      const menuData: RoutesDataItem[] = vueRoutes(menuDatas);
+      console.log("menuData----",menuData)
       // 框架所有的路由转成json并统一添加了parentPath
       const jsonPathRoutes: PathJsonRoutesDataItem = jsonPathVueRoutes(menuData);
 
@@ -158,7 +158,7 @@ export default defineComponent({
         tabNavEnable,
         topNavEnable,
         belongTopMenu,
-        headFixed, 
+        headFixed,
         selectedKeys,
         leftOpenKeys,
         breadCrumbs,

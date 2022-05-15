@@ -61,12 +61,12 @@ const IndexLayoutRoutes: Array<RoutesDataItem> = [
     redirect: '/system/dict',
     component: BlankLayout,
     children: [
-      {
-        icon: 'icon',
-        title: 'index-layout.menu.system.user',
-        path: 'icon',
-        component: () => import('@/views/system/user/index.vue'),
-      },
+      // {
+      //   icon: 'icon',
+      //   title: 'index-layout.menu.system.user',
+      //   path: 'icon',
+      //   component: () => import('@/views/system/user/index.vue'),
+      // },
       {
         icon: 'icon',
         title: 'index-layout.menu.system.dict',
