@@ -1,0 +1,46 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "vite" ]
+  pull_request:
+    branches: [ "vite" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 16.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run build --if-present
+    - run: npm test
+    - run: pwd
+    - run: ls dist
+    - run: ls -al
+    
+
+    - name: Upload to Aliyun oss
+      id: upload_to_oss
+      uses: AliyunWorkbench/workbench-oss@1.0.0
+      with:
+        ACCESS_KEY: ${{ secrets.aliyun_oss_accessKey_id }}
+        ACCESS_SECRET: ${{ secrets.aliyun_oss_accessKey_secret }}
+        OSS_REGION: ${{ secrets.aliyun_oss_region }}
+        OSS_BUCKET: ${{ secrets.aliyun_oss_bucket_name }}
+        OSS_PATH: /
+        UPLOAD_PATH: ./dist
