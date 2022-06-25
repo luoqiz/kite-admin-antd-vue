@@ -11,6 +11,7 @@ import { computed, ComputedRef, defineComponent, onMounted, Ref, ref } from "vue
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { StateType as UserStateType, CurrentUser } from "@/store/user";
+import { updateRouter } from "@/utils/sessionMenus";
 
 interface SecurityLayoutSetupData {
     isLogin: ComputedRef<boolean>;
@@ -23,29 +24,34 @@ export default defineComponent({
     name: 'SecurityLayout',
     setup(): SecurityLayoutSetupData {
         const router = useRouter();
-        const store = useStore<{user: UserStateType}>();
+        const store = useStore<{ user: UserStateType }>();
 
         // 获取当前登录用户信息
-        const currentUser = computed<CurrentUser>(()=> store.state.user.currentUser);
+        const currentUser = computed<CurrentUser>(() => store.state.user.currentUser);
+        console.log('----currentUser.value----', currentUser.value)
 
         // 判断是否登录
-        const isLogin = computed<boolean>(()=> currentUser.value ? currentUser.value.userId > 0 : false);
+        const isLogin = computed<boolean>(() => currentUser.value ? currentUser.value.userId.length > 0 : false);
 
         // 读取当前用户信息func
         const isReady = ref<boolean>(false); // 是否读取过用户信息
         const loading = ref<boolean>(false);
         const getUser = async () => {
             loading.value = true;
-            await store.dispatch('user/fetchCurrent');
-            if(!isLogin.value && router.currentRoute.value.path !== '/user/login') {
+            console.log("isLogin.value---", isLogin.value);
+            if (!isLogin.value && router.currentRoute.value.path !== '/user/login') {
                 await router.replace({
-                  path: '/user/login',
-                  query: {
-                    redirect: router.currentRoute.value.path,
-                    ...router.currentRoute.value.query
-                  }
+                    path: '/user/login',
+                    query: {
+                        redirect: router.currentRoute.value.path,
+                        ...router.currentRoute.value.query
+                    }
                 })
-            }            
+            } else {
+                // 设置当前用户的菜单
+                await store.dispatch('user/fetchCurrent');
+                updateRouter(router);
+            }
             loading.value = false;
             isReady.value = true;
         }

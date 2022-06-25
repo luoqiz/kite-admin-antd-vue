@@ -7,7 +7,7 @@ import { RoutesDataItem } from '@/utils/routes';
 import { clearMenus, setMenus } from '@/utils/sessionMenus';
 
 export interface CurrentUser {
-  userId: number;
+  userId: string;
   username: string;
   nickName: string;
   deptId: number;
@@ -62,7 +62,7 @@ export interface ModuleType extends StoreModuleType<StateType> {
 
 const initState: StateType = {
   currentUser: {
-    userId: 0,
+    userId: '',
     username: '',
     nickName: '',
     deptId: 0,
@@ -99,10 +99,10 @@ const StoreModel: ModuleType = {
   actions: {
     async fetchCurrent({ commit }) {
       try {
-        console.log('---------saveCurrentUser--------');
         const response: ResponseData = await queryCurrent();
         const { data } = response;
         commit('saveCurrentUser', data || {});
+        console.log('---------saveCurrentUser--------',data);
         const { menus } = data;
         await setMenus(menus);
 

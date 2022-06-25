@@ -3,20 +3,20 @@
     <h1 class="title">
       {{ t('page.user.login.form.title') }}
     </h1>
-    <a-form :wrapper-col="{span:24}">
+    <a-form :wrapper-col="{ span: 24 }">
       <a-form-item label="" v-bind="validateInfos.username">
         <a-input v-model:value="modelRef.username" :placeholder="t('page.user.login.form-item-username')"
-                 @keyup.enter="handleSubmit">
+          @keyup.enter="handleSubmit">
           <template #prefix>
-            <user-outlined/>
+            <user-outlined />
           </template>
         </a-input>
       </a-form-item>
       <a-form-item label="" v-bind="validateInfos.password">
         <a-input-password v-model:value="modelRef.password" :placeholder="t('page.user.login.form-item-password')"
-                          @keyup.enter="handleSubmit">
+          @keyup.enter="handleSubmit">
           <template #prefix>
-            <unlock-outlined/>
+            <unlock-outlined />
           </template>
         </a-input-password>
       </a-form-item>
@@ -31,23 +31,23 @@
         </div>
       </a-form-item>
       <a-alert v-if="loginStatus === 'error' && !submitLoading" :message="t('page.user.login.form.login-error')"
-               type="error" :show-icon="true"/>
+        type="error" :show-icon="true" />
     </a-form>
   </div>
 </template>
 <script lang="ts">
-import {computed, ComputedRef, defineComponent, reactive, Ref, ref} from "vue";
-import {useRouter} from 'vue-router';
-import {useStore} from 'vuex';
-import {useI18n} from "vue-i18n";
+import { computed, ComputedRef, defineComponent, reactive, Ref, ref } from "vue";
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+import { useI18n } from "vue-i18n";
 
-import {Props, validateInfos} from 'ant-design-vue/lib/form/useForm';
-import {Form, message} from 'ant-design-vue';
-import {UnlockOutlined, UserOutlined} from '@ant-design/icons-vue';
+import { Props, validateInfos } from 'ant-design-vue/lib/form/useForm';
+import { Form, message } from 'ant-design-vue';
+import { UnlockOutlined, UserOutlined } from '@ant-design/icons-vue';
 import useI18nAntdFormVaildateInfos from '@/composables/useI18nAntdFormVaildateInfos';
-import {LoginParamsType} from './data.d';
-import {StateType as UserLoginStateType} from './store';
-import {updateRouter} from "@/utils/sessionMenus";
+import { LoginParamsType } from './data.d';
+import { StateType as UserLoginStateType } from './store';
+import { updateRouter } from "@/utils/sessionMenus";
 
 const useForm = Form.useForm;
 
@@ -69,9 +69,9 @@ export default defineComponent({
   },
   setup(): UserLoginSetupData {
     const router = useRouter();
-    const {currentRoute} = router;
+    const { currentRoute } = router;
     const store = useStore<{ userlogin: UserLoginStateType }>();
-    const {t} = useI18n();
+    const { t } = useI18n();
 
     // 表单值
     const modelRef = reactive<LoginParamsType>({
@@ -94,7 +94,7 @@ export default defineComponent({
       ],
     });
     // 获取表单内容
-    const {resetFields, validate, validateInfos} = useForm(modelRef, rulesRef);
+    const { resetFields, validate, validateInfos } = useForm(modelRef, rulesRef);
     // 登录loading
     const submitLoading = ref<boolean>(false);
     // 登录
@@ -109,10 +109,10 @@ export default defineComponent({
           // 设置当前用户的菜单
           await store.dispatch('user/fetchCurrent');
           updateRouter(router);
-          
-          const {redirect, ...query} = currentRoute.value.query;
+
+          const { redirect, ...query } = currentRoute.value.query;
           await router.replace({
-            path: redirect as string || '/index',
+            path: redirect as string || '/',
             query: {
               ...query
             }
@@ -168,5 +168,4 @@ export default defineComponent({
     width: 100%;
   }
 }
-
 </style>

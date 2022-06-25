@@ -7,7 +7,6 @@ import { RoutesDataItem } from '@/utils/routes';
 import BlankLayout from '@/layouts/BlankLayout.vue';
 import { defineAsyncComponent } from 'vue';
 import { SysMenuDataType } from '@/store/user';
-import SecurityLayout from '@/layouts/SecurityLayout.vue';
 import IndexLayout from '@/layouts/IndexLayout/index.vue';
 
 /**
@@ -92,46 +91,16 @@ const loadView = (view) => {
 
 export const updateRouter = (router) => {
   const menus = getMenus();
-  if (menus.length === 0) {
-    router.addRoute({
+  if (menus.length !== 0) {
+    router.addRoute('security', {
       title: 'empty',
-      path: '/index',
-      component: SecurityLayout,
-      children: [
-        {
-          title: 'empty',
-          path: '/refresh',
-          component: () => import('@/views/refresh/index.vue'),
-        },
-      ],
-    });
-  } else {
-    router.addRoute({
-      title: 'empty',
-      path: '/index',
-      component: SecurityLayout,
-      children: [
-        {
-          title: 'empty',
-          path: '/index',
-          redirect: menus.at(0)?.path || '',
-          component: IndexLayout,
-          children: menus,
-        },
-        {
-          title: 'empty',
-          path: '/refresh',
-          component: () => import('@/views/refresh/index.vue'),
-        },
-      ],
+      path: '/',
+      redirect: menus.at(0)?.path || '',
+      component: IndexLayout,
+      children: menus,
     });
   }
-  router.addRoute({
-    title: 'app.global.menu.notfound',
-    path: '/:pathMatch(.*)*',
-    component: () => import('@/views/404/index.vue'),
-  });
 
-  console.log('userStore.userMenus**-*-', menus);
-  console.log('router**-*-', router.getRoutes());
+  // console.log('userStore.userMenus**-*-', menus);
+  // console.log('router**-*-', router.getRoutes());
 };

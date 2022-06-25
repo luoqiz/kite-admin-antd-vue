@@ -10,36 +10,24 @@ import { RoutesDataItem } from '@/utils/routes';
 import UserLayoutRoutes from '@/layouts/UserLayout/routes';
 import UserLayout from '@/layouts/UserLayout/index.vue';
 import BlankLayout from '@/layouts/BlankLayout.vue';
+import SecurityLayout from '@/layouts/SecurityLayout.vue';
 import { updateRouter } from '@/utils/sessionMenus';
 
 NProgress.configure({ showSpinner: false, easing: 'ease', speed: 1000 }); // NProgress Configuration
 
 const routes: RoutesDataItem[] = [
-  // {
-  //   title: 'empty',
-  //   path: '/',
-  //   component: SecurityLayout,
-  //   children: [
-  //     {
-  //       title: 'empty',
-  //       path: '/',
-  //       redirect: settings.homeRouteItem.path,
-  //       component: IndexLayout,
-  //       children: store.state.user.userMenus,
-  //     },
-  //     {
-  //       title: 'empty',
-  //       path: '/refresh',
-  //       component: () => import('@/views/refresh/index.vue'),
-  //     },
-  //   ],
-  // },
   {
-    name: 'index',
     title: 'empty',
+    name: 'security',
     path: '/',
-    component: BlankLayout,
-    redirect: '/user',
+    component: SecurityLayout,
+    children: [
+      {
+        title: 'empty',
+        path: '/refresh',
+        component: () => import('@/views/refresh/index.vue'),
+      },
+    ],
   },
   {
     title: 'empty',
@@ -48,6 +36,11 @@ const routes: RoutesDataItem[] = [
     component: UserLayout,
     children: UserLayoutRoutes,
   },
+  {
+    title: 'app.global.menu.notfound',
+    path: '/:pathMatch(.*)*',
+    component: () => import('@/views/404/index.vue'),
+  }
 ];
 
 const router = createRouter({
