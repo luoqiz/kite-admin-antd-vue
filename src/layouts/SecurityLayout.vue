@@ -38,19 +38,17 @@ export default defineComponent({
         const loading = ref<boolean>(false);
         const getUser = async () => {
             loading.value = true;
-            console.log("isLogin.value---", isLogin.value);
-            if (!isLogin.value && router.currentRoute.value.path !== '/user/login') {
-                await router.replace({
+            await store.dispatch('user/fetchCurrent');
+            if(!isLogin.value && router.currentRoute.value.path !== '/user/login') {
+              await  router.replace({
                     path: '/user/login',
                     query: {
                         redirect: router.currentRoute.value.path,
                         ...router.currentRoute.value.query
                     }
                 })
-            } else {
-                // 设置当前用户的菜单
-                await store.dispatch('user/fetchCurrent');
-                updateRouter(router);
+            }  else {
+              updateRouter(router);
             }
             loading.value = false;
             isReady.value = true;

@@ -4,16 +4,25 @@
  */
 import NProgress from 'nprogress'; // progress bar
 import 'nprogress/nprogress.css'; // progress bar style
+NProgress.configure({ showSpinner: false, easing: 'ease', speed: 1000 }); // NProgress Configuration
+
 import { createRouter, createWebHashHistory } from 'vue-router';
 import { RoutesDataItem } from '@/utils/routes';
+// import settings from "@/config/settings";
+
+import SecurityLayout from '@/layouts/SecurityLayout.vue';
+
+/* UniversalLayout 通用布局，可以与 IndexLayout 互相代替  */
+// import UniversalLayoutRoutes from '@/layouts/UniversalLayout/routes';
+// import UniversalLayout from '@/layouts/UniversalLayout/index.vue';
+
+/* IndexLayout 自定义布局，可以与 UniversalLayout 互相代替 */
+import IndexLayoutRoutes from '@/layouts/IndexLayout/routes';
+import IndexLayout from '@/layouts/IndexLayout/index.vue';
 
 import UserLayoutRoutes from '@/layouts/UserLayout/routes';
 import UserLayout from '@/layouts/UserLayout/index.vue';
-import BlankLayout from '@/layouts/BlankLayout.vue';
-import SecurityLayout from '@/layouts/SecurityLayout.vue';
 import { updateRouter } from '@/utils/sessionMenus';
-
-NProgress.configure({ showSpinner: false, easing: 'ease', speed: 1000 }); // NProgress Configuration
 
 const routes: RoutesDataItem[] = [
   {
@@ -22,6 +31,13 @@ const routes: RoutesDataItem[] = [
     path: '/',
     component: SecurityLayout,
     children: [
+      // {
+      //   title: 'empty',
+      //   path: '/',
+      //   redirect: settings.homeRouteItem.path,
+      //   component: IndexLayout,
+      //   children: IndexLayoutRoutes
+      // },
       {
         title: 'empty',
         path: '/refresh',
@@ -40,7 +56,7 @@ const routes: RoutesDataItem[] = [
     title: 'app.global.menu.notfound',
     path: '/:pathMatch(.*)*',
     component: () => import('@/views/404/index.vue'),
-  }
+  },
 ];
 
 const router = createRouter({

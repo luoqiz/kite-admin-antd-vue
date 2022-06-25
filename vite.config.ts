@@ -29,7 +29,8 @@ export default defineConfig(({ mode, command })=> {
   mode === 'development' && process.env.APP_MOCK === 'true' && plugins.push(vitePluginMock());
 
   // @vitejs/plugin-legacy
-  command === 'build' && plugins.push(legacy());
+  // command === 'build' && plugins.push(legacy({}));
+  command === 'build';
   
   return {
     plugins,
