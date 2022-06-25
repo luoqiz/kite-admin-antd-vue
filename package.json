@@ -15,7 +15,7 @@
     "@toast-ui/editor": "^2.5.4",
     "ant-design-vue": "^3.2.0",
     "axios": "^0.21.4",
-    "echarts": "^5.3.3",
+    "echarts": "^4.9.0",
     "localforage": "^1.10.0",
     "lodash.debounce": "^4.0.8",
     "moment": "^2.29.3",

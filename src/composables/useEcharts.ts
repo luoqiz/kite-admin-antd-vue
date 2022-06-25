@@ -1,11 +1,11 @@
 import { onMounted, onBeforeUnmount, Ref, ref } from 'vue';
 import debounce from 'lodash.debounce';
-import echarts, { ECharts, EChartOption } from 'echarts';
+import echarts, { ECharts, EChartsOption } from 'echarts';
 import 'echarts/theme/macarons';
 
 export default function useEcharts(
     labRef: Ref<HTMLDivElement | HTMLCanvasElement | undefined>, 
-    initOption: EChartOption, 
+    initOption: EChartsOption, 
     theme: string | object = 'macarons'
     ): Ref<echarts.ECharts | undefined> {
 
